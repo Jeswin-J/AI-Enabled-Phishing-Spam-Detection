@@ -1,1 +1,1 @@
-# AI-Enabled-Phishing-Detection-Crowd-Sourced-Spam-Identification
+# AI-Enabled-Phishing-Spam-Detection
