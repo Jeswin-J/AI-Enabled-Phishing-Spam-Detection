@@ -15,18 +15,21 @@ def preprocess_input(input_text):
     processed_input = ' '.join(stemmed_words)
     return processed_input
 
+
 # Vectorize input text
 def vectorize_input(processed_input, cv):
     input_features = cv.transform([processed_input])
     return input_features.toarray()
 
+
 # Load models
 def load_models():
-    model_nb = joblib.load('./spam_detection_models/model_nb.pkl')
-    model_svm = joblib.load('./spam_detection_models/model_svm.pkl')
-    model_lr = joblib.load('./spam_detection_models/model_lr.pkl')
-    model_dt = joblib.load('./spam_detection_models/model_dt.pkl')
+    model_nb = joblib.load('SpamDetector/spam_detection_models/model_nb.pkl')
+    model_svm = joblib.load('SpamDetector/spam_detection_models/model_svm.pkl')
+    model_lr = joblib.load('SpamDetector/spam_detection_models/model_lr.pkl')
+    model_dt = joblib.load('SpamDetector/spam_detection_models/model_dt.pkl')
     return model_nb, model_svm, model_lr, model_dt
+
 
 # Predict using models
 def predict_spam(input_text, cv):

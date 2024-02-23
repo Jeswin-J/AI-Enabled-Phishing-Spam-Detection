@@ -12,6 +12,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import LabelEncoder
 import joblib
 
+
 # Load dataset and perform preprocessing
 def preprocess_data(dataset_path):
     dataset = pd.read_csv(dataset_path, encoding='latin-1')
@@ -28,6 +29,7 @@ def preprocess_data(dataset_path):
 
     return processed_sentences, dataset['v1']
 
+
 # Train and save models
 def train_models(processed_sentences, labels):
     cv = CountVectorizer(max_features=5000)
@@ -39,29 +41,30 @@ def train_models(processed_sentences, labels):
     # Multinomial Naive Bayes
     model_nb = MultinomialNB()
     model_nb.fit(features, labels_encoded)
-    joblib.dump(model_nb, './spam_detection_models/model_nb.pkl')
+    joblib.dump(model_nb, 'SpamDetector/spam_detection_models/model_nb.pkl')
 
     # Support Vector Machine
     model_svm = SVC(kernel='linear')
     model_svm.fit(features, labels_encoded)
-    joblib.dump(model_svm, './spam_detection_models/model_svm.pkl')
+    joblib.dump(model_svm, 'SpamDetector/spam_detection_models/model_svm.pkl')
 
     # Logistic Regression
     model_lr = LogisticRegression()
     model_lr.fit(features, labels_encoded)
-    joblib.dump(model_lr, './spam_detection_models/model_lr.pkl')
+    joblib.dump(model_lr, 'SpamDetector/spam_detection_models/model_lr.pkl')
 
     # Decision Tree
     model_dt = DecisionTreeClassifier()
     model_dt.fit(features, labels_encoded)
-    joblib.dump(model_dt, './spam_detection_models/model_dt.pkl')
+    joblib.dump(model_dt, 'SpamDetector/spam_detection_models/model_dt.pkl')
 
     return cv, label_encoder
 
+
 # Main function
-#def main():
-processed_sentences, labels = preprocess_data('C:/Users/Jeswin Joseph J/SRM Police Hackathon/AI-Enabled-Phishing-Spam-Detection/dataset/spam.csv')
+# def main():
+processed_sentences, labels = preprocess_data('dataset/spam.csv')
 cv, label_encoder = train_models(processed_sentences, labels)
 
-#if __name__ == "__main__":
-    #main()
+# if __name__ == "__main__":
+# main()
