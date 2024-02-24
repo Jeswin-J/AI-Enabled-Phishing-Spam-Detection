@@ -63,7 +63,7 @@ def train_models(processed_sentences, labels):
 
 # Main function
 # def main():
-processed_sentences, labels = preprocess_data('dataset/spam.csv')
+processed_sentences, labels = preprocess_data('SpamDetector/dataset/spam.csv')
 cv, label_encoder = train_models(processed_sentences, labels)
 
 # if __name__ == "__main__":
