@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block navLink %}
+  <li><a class="nav-link scrollto active" href="/">Home</a></li>
+  <li><a class="nav-link scrollto" href="/spamdetector">Spam Detector</a></li>
+  <li><a class="nav-link scrollto" href="/phishingdetector">Phishing Detector</a></li>
+  <li><a class="nav-link scrollto" href="/urlscanner">URL Scanner</a></li>
+  <li><a class="nav-link scrollto" href="/tracecall">Trace Call</a></li>
+{% endblock %}
+
+{% block heroContent %}
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+      <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-9 text-center">
+          <h1>Blue PhishShield</h1>
+          <h2>Blue PhishShield is a software developed by Team CodeBlue to address the growing threat of Spam & Phishing</h2>
+        </div>
+      </div>
+
+      <div class="row icon-boxes">
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+          <a href="/spamdetector" class="card-link">
+              <div class="icon-box">
+                  <div class="icon"><i class="ri-stack-line"></i></div>
+                  <h4 class="title">Spam Detector</h4>
+                  <p class="description">AI-Enabled Tool to Accurately classify & Block Spam Messages</p>
+              </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
+          <a href="/phishingdetector" class="card-link">
+          <div class="icon-box">
+            <div class="icon"><i class="ri-palette-line"></i></div>
+            <h4 class="title">Phishing Detector</h4>
+            <p class="description">Crowd-Sourcing based Tool to Identify & Block Phishing URLs</p>
+          </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+          <a href="/urlscanner" class="card-link">
+          <div class="icon-box">
+            <div class="icon"><i class="ri-command-line"></i></div>
+            <h4 class="title">URL Scanner</h4>
+            <p class="description">Scan, Locate and Analyse a Suspicious URL </p>
+          </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="500">
+          <a href="/tracecall" class="card-link">
+          <div class="icon-box">
+            <div class="icon"><i class="ri-fingerprint-line"></i></div>
+            <h4 class="title">Trace Call</h4>
+            <p class="description">Identify the Geographical Location, using Phone Number</p>
+          </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  {% endblock %}
+
+  {% block mainContent %}
+    <section id="faq" class="faq section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Good to Know</h2>
+        </div>
+
+        <div class="faq-list">
+          <ul>
+            <li data-aos="fade-up">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">What is spam email?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+                <p>
+                  Spam refers to unwanted or unsolicited messages, typically sent in bulk, often for advertising purposes. These messages can include emails, text messages, or comments on websites.
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">What is phishing? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                <p>
+               In simple terms, phishing is a type of cyberattack where attackers trick people into giving away their sensitive information, such as passwords, credit card numbers, or personal details. This is usually done by sending deceptive emails or messages that appear to be from trusted sources, like banks or companies. The goal of phishing is to steal valuable information or gain unauthorized access to accounts.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">How can I recognize spam emails?  <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+                <p>
+
+                  Spam emails often contain generic greetings, poor grammar or spelling, requests for personal information, urgent calls to action, or suspicious attachments or links. They may also come from unfamiliar or suspicious email addresses.</p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">What should I do if I receive a suspicious email?  <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  If you receive a suspicious email, do not click on any links, download attachments, or provide personal information. Instead, mark the email as spam or phishing (if your email provider offers this option) and delete it. You can also report it to your organization's IT department or the relevant authorities.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">How can I protect myself from phishing attacks?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  To protect yourself from phishing attacks, be cautious of unsolicited emails, verify the legitimacy of the sender before clicking on any links or providing information, use strong, unique passwords for online accounts, and enable multi-factor authentication when available.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="500">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-6" class="collapsed">What are some common phishing techniques?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-6" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Common phishing techniques include email spoofing (where the sender's address is forged to appear as a trusted source), deceptive links (URLs that appear legitimate but lead to malicious websites), and social engineering (manipulating individuals into divulging sensitive information through psychological manipulation).
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="500">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-7" class="collapsed">What should I do if I accidentally clicked on a phishing link or provided information?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-7" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  If you accidentally clicked on a phishing link or provided sensitive information, take immediate action to protect yourself. Change your passwords for any compromised accounts, notify your bank or credit card company if financial information was involved, and consider running a virus scan on your device to check for malware.  Also report the incident to cybercrime using the toll-free number - 1930
+                </p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+  {% endblock %}
