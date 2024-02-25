@@ -1,10 +1,175 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block heroContent %}
+
+<div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+  <div class="row justify-content-center">
+    <div class="col-xl-12 col-lg-12">
+      <h1 style="margin-bottom: 30px; font-size: 40px; text-align: center; line-height: 56px;">URL Scan Report</h1>
+      <div class="row justify-content-center">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 10px;"><b>Network Information</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>IP Address:</b></h6>
+                            <p class="card-text">{{ data["ip_address"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Host Name:</b></h6>
+                            <p class="card-text">{{ data["location"]['hostname'] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Network Handle:</b></h6>
+                            <p class="card-text">{{ data["network_handle"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>IP Version:</b></h6>
+                            <p class="card-text">{{ data["ip_version"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Status:</b></h6>
+                            <p class="card-text">{{ data["network_status"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="card-title" style="margin-bottom: 10px; margin-top:30px;"><b>ASN Information</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>ASN:</b></h6>
+                            <p class="card-text">{{ data["asn"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>ASN Registry:</b></h6>
+                            <p class="card-text">{{ data["asn_registry"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Description:</b></h6>
+                            <p class="card-text">{{ data["asn_description"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>ASN CIDR:</b></h6>
+                            <p class="card-text">{{ data["asn_cidr"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>ASN Date:</b></h6>
+                            <p class="card-text">{{ data["asn_date"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>TLD:</b></h6>
+                            <p class="card-text">{{ data["tld"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="card-title" style="margin-bottom: 10px; margin-top:30px;"><b>Network Events</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Registered:</b></h6>
+                            <p class="card-text">{{ data["registration_time"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Last Modified:</b></h6>
+                            <p class="card-text">{{ data["last_changed"] }}</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 10px;"><b>Geographical Information</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Organization:</b></h6>
+                            <p class="card-text">{{ data["address_name"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Address:</b></h6>
+                            <p class="card-text">{{ data["address_info"] | safe}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Country Code:</b></h6>
+                            <p class="card-text">{{ data["country_code"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="card-title" style="margin-bottom: 10px; margin-top:30px;"><b>Contact Information</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Phone No:</b></h6>
+                            <p class="card-text">{{ data["phone"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Email Address:</b></h6>
+                            <p class="card-text">{{ data["email"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top:24px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 10px;"><b>Scan Details</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Source:</b></h6>
+                            <p class="card-text">{{ data["source_url"]}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Scan Time:</b></h6>
+                            <p class="card-text">{{ data["current_timestamp"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="card-title" style="margin-bottom: 10px; margin-top:30px;"><b>Threat Intelligence</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Is Phishing:</b></h6>
+                            <p class="card-text">{{ data["is_phishing"]}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Phishing Score:</b></h6>
+                            <p class="card-text">{{ data["phishing_score"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

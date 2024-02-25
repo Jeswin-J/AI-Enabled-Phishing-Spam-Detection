@@ -1,11 +1,18 @@
 import socket
+from urllib.parse import urlparse
 from urllib.request import urlopen
 from json import load
 from ipwhois import IPWhois
 from tld import get_tld
+import validators
 
 
-def ip_address(host):
+def is_valid_url(url):
+    return validators.url(url)
+
+
+def ip_address(url):
+    host = urlparse(url).hostname
     ip = socket.gethostbyname(host)
     return ip
 
@@ -27,7 +34,7 @@ def ip_location_info(ip_addr):
     return data
 
 
-def ip_info(ip_addr):
+def ip_information(ip_addr):
     obj = IPWhois(ip_addr)
     result = obj.lookup_rdap()
     return result
