@@ -1,6 +1,6 @@
 import warnings
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 # from SpamDetector.model import cv
 # from SpamDetector.utils import predict_spam
@@ -31,6 +31,36 @@ def trace_call():
 @app.route('/urlscanner')
 def url_scanner():
     return render_template('urlscanner.html')
+
+
+@app.route('/api/detectspam', methods=['POST'])
+def check_spam():
+    message = request.form.get('message')
+    phone = request.form.get('phone')
+    email = request.form.get('email')
+    print("##########", message, phone, email)
+    return render_template('results/spamresults.html')
+
+
+@app.route('/api/detectphishing', methods=['POST'])
+def check_phishing():
+    url = request.form.get('url')
+    print("##########", url)
+    return render_template('results/phishingresults.html')
+
+
+@app.route('/api/trace', methods=['POST'])
+def trace():
+    phone = request.form.get('phone')
+    print("##########", phone)
+    return render_template('results/tracecallresults.html')
+
+
+@app.route('/api/scanurl', methods=['POST'])
+def scan_url():
+    url = request.form.get('url')
+    print("##########", url)
+    return render_template('results/urlscanresults.html')
 
 
 # @app.route("/predict_spam", methods=["GET"])
