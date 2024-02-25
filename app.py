@@ -1,12 +1,14 @@
-import time
-from datetime import datetime, timezone, timedelta
 
+import requests
 from flask import Flask, render_template, request
+from Utils.utils import *
 
 # from SpamDetector.model import cv
 # from SpamDetector.utils import predict_spam
 
 from UrlScanner.url_scanner import *
+from PhishingDetector.url_features import *
+from PhishingDetector.website_features import *
 
 app = Flask(__name__)
 
@@ -48,8 +50,34 @@ def check_spam():
 @app.route('/api/detectphishing', methods=['POST'])
 def check_phishing():
     url = request.form.get('url')
-    print("##########", url)
-    return render_template('results/phishingresults.html')
+    if is_valid_url(url):
+
+        response = requests.get(url)
+
+        features = {
+            "protocol": check_url_protocol(url),
+            "at_sign": check_at_sign(url),
+            "ip_in_domain": have_ip_addr(url),
+            "url_length": check_url_length(url),
+            "redirection": have_redirection(url),
+            "https_in_domain": check_https_domain(url),
+            "dash": have_dash(url),
+            "upper_case": is_domain_upper(url),
+            "homograph": check_homograph(url),
+            "short": check_tiny_url(url),
+            "iframe": have_iframe(response),
+            "forward": forwarding(response),
+            "r_click": right_click(response),
+            "m_over": mouse_over(response),
+            "head_script": check_head_script(response),
+            "num_domain": have_num(url),
+        }
+
+        risk_score = calc_phishing_score(features)
+        print(risk_score)
+
+        return render_template('results/phishingresults.html')
+    return "INVALID"
 
 
 @app.route('/api/trace', methods=['POST'])
@@ -65,11 +93,9 @@ def scan_url():
     if is_valid_url(url):
         tld = url_tld(url)
         ip_addr = ip_address(url)
-        # host = host_name(ip_addr)
         location = ip_location_info(ip_addr)
 
         ip_info = ip_information(ip_addr)
-        print(ip_info)
 
         entity = ip_info['entities'][0]
 
@@ -87,15 +113,11 @@ def scan_url():
         else:
             phone_no = '--'
 
-        current_time_utc = datetime.now(timezone.utc)
-        target_timezone = timezone(timedelta(hours=5, minutes=30))
-        current_time_target_timezone = current_time_utc.astimezone(target_timezone)
-        current_timestamp = current_time_target_timezone.strftime("%Y-%m-%dT%H:%M:%S%z")
+        current_timestamp = get_timestamp()
 
         data = {
             'tld': tld,
             'ip_address': ip_addr,
-            # 'host': host,
             'location': location,
             'asn': ip_info['asn'],
             'asn_registry': ip_info['asn_registry'],
@@ -117,9 +139,6 @@ def scan_url():
             'is_phishing': '--',
             'phishing_score': '--',
         }
-
-        for key, value in data.items():
-            print(f"######{key}: {value}\n")
 
         return render_template('results/urlscanresults.html', data=data)
     return render_template('error/invalid.html')

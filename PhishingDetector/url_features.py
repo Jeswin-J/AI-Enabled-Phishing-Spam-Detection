@@ -93,7 +93,7 @@ def check_homograph(url):
     return 0
 
 
-def tiny_url(url):
+def check_tiny_url(url):
 
     shortening_services = r"bit\.ly|goo\.gl|shorte\.st|go2l\.ink|x\.co|ow\.ly|t\.co|tinyurl|tr\.im|is\.gd|cli\.gs|" \
                           r"yfrog\.com|migre\.me|ff\.im|tiny\.cc|url4\.eu|twit\.ac|su\.pr|twurl\.nl|snipurl\.com|" \
@@ -109,3 +109,9 @@ def tiny_url(url):
         return 1
     else:
         return 0
+
+
+def have_num(url):
+    domain = urlparse(url).netloc
+    return bool(re.search(r"\d", domain))
+
