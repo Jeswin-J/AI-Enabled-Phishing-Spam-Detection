@@ -1,10 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block navLink %}
+  <li><a class="nav-link scrollto" href="/">Home</a></li>
+  <li><a class="nav-link scrollto" href="/spamdetector">Spam Detector</a></li>
+  <li><a class="nav-link scrollto" href="/phishingdetector">Phishing Detector</a></li>
+  <li><a class="nav-link scrollto" href="/urlscanner">URL Scanner</a></li>
+  <li><a class="nav-link scrollto active" href="/tracecall">Trace Call</a></li>
+{% endblock %}
+
+
+{% block heroContent %}
+
+<div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+  <div class="row justify-content-center">
+    <div class="col-xl-12 col-lg-12">
+      <h1 style="margin-bottom: 30px; font-size: 40px; text-align: center; line-height: 56px;">Call Trace Report</h1>
+      <div class="row justify-content-center">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 10px;"><b>Summary</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Phone:</b></h6>
+                            <p class="card-text">{{ data["international_format"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Country Code:</b></h6>
+                            <p class="card-text">{{ data["country_code"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Service Provider:</b></h6>
+                            <p class="card-text">{{ data["service_provider"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Country:</b></h6>
+                            <p class="card-text">{{ data["region"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="card-title" style="margin-bottom: 10px; margin-top: 30px;"><b>Geo Location</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Lat/Long:</b></h6>
+                            <p class="card-text">{{ data["lat_long"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Region:</b></h6>
+                            <p class="card-text">{{ data["region"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Time Zone:</b></h6>
+                            <p class="card-text">{{ data["time_zone"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 10px;"><b>Recommendations</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-12">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Do's:</b></h6>
+                            <p class="card-text">{{ data }}</p>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Don't:</b></h6>
+                            <p class="card-text">{{ data }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

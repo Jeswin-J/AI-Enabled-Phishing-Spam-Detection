@@ -1,10 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block navLink %}
+  <li><a class="nav-link scrollto" href="/">Home</a></li>
+  <li><a class="nav-link scrollto active" href="/spamdetector">Spam Detector</a></li>
+  <li><a class="nav-link scrollto" href="/phishingdetector">Phishing Detector</a></li>
+  <li><a class="nav-link scrollto" href="/urlscanner">URL Scanner</a></li>
+  <li><a class="nav-link scrollto" href="/tracecall">Trace Call</a></li>
+{% endblock %}
+
+
+{% block heroContent %}
+
+<div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+  <div class="row justify-content-center">
+    <div class="col-xl-12 col-lg-12">
+      <h1 style="margin-bottom: 30px; font-size: 40px; text-align: center; line-height: 56px;">Spam Report</h1>
+      <div class="row justify-content-center">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 10px;"><b>Summary</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-12">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Input Message:</b></h6>
+                            <p class="card-text">{{ data["input_msg"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Sender {{ data["vector"] }}:</b></h6>
+                            <p class="card-text">{{ data["sender"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Medium:</b></h6>
+                            <p class="card-text">{{ data["vector"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Scan Time:</b></h6>
+                            <p class="card-text">{{ data["current_timestamp"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Status:</b></h6>
+                            <p class="card-text">{{ data["status"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Spam Score:</b></h6>
+                            <p class="card-text">{{ data["spam_score"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="card-title" style="margin-bottom: 10px; margin-top: 30px;"><b>Medium Analysis</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-7">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Protocol Used:</b></h6>
+                            <p class="card-text">{{ data["protocol"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Redirection Count:</b></h6>
+                            <p class="card-text">{{ data["redir_count"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Homograph Found:</b></h6>
+                            <p class="card-text">{{ data["is_homograph"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Is URL Shortened?:</b></h6>
+                            <p class="card-text">{{ data["shortened"] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 10px;"><b>Recommendations</b></h5>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-12">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Do's:</b></h6>
+                            <p class="card-text">{{ data }}</p>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Don't:</b></h6>
+                            <p class="card-text">{{ data }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

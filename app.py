@@ -1,14 +1,13 @@
-
-import requests
 from flask import Flask, render_template, request
 from Utils.utils import *
 
-# from SpamDetector.model import cv
-# from SpamDetector.utils import predict_spam
+from SpamDetector.model import cv
+from SpamDetector.utils import predict_spam
 
 from UrlScanner.url_scanner import *
 from PhishingDetector.url_features import *
 from PhishingDetector.website_features import *
+from TraceCall.trace_call import *
 
 app = Flask(__name__)
 
@@ -38,21 +37,25 @@ def url_scanner():
     return render_template('urlscanner.html')
 
 
-@app.route('/api/detectspam', methods=['POST'])
-def check_spam():
-    message = request.form.get('message')
-    phone = request.form.get('phone')
-    email = request.form.get('email')
-    print("##########", message, phone, email)
-    return render_template('results/spamresults.html')
-
-
 @app.route('/api/detectphishing', methods=['POST'])
 def check_phishing():
     url = request.form.get('url')
     if is_valid_url(url):
-
         response = requests.get(url)
+
+        data = {
+            "protocol": "",
+            "src_url": url,
+            "redir_url": "--",
+            "status": "",
+            "phishing_score": "",
+            "redir_count": "--",
+            "is_homograph": "",
+            "shortened": "",
+            "current_timestamp": get_timestamp(),
+            "do": {},
+            "do_not": {},
+        }
 
         features = {
             "protocol": check_url_protocol(url),
@@ -71,20 +74,49 @@ def check_phishing():
             "m_over": mouse_over(response),
             "head_script": check_head_script(response),
             "num_domain": have_num(url),
+            "favicon": check_favicon(response, url),
         }
 
-        risk_score = calc_phishing_score(features)
-        print(risk_score)
+        if features["protocol"]:
+            data["protocol"] = "http"
+        else:
+            data["protocol"] = "http"
 
-        return render_template('results/phishingresults.html')
-    return "INVALID"
+        risk_score = calc_phishing_score(features)
+
+        data["phishing_score"] = risk_score
+
+        if risk_score >= 50:
+            data["status"] = "Phishing"
+        elif 50 > risk_score >= 15:
+            data["status"] = "Suspicious"
+        else:
+            data["status"] = "Legitimate"
+
+        if features["homograph"]:
+            data["is_homograph"] = "Yes"
+        else:
+            data["is_homograph"] = "No"
+
+        if features["short"]:
+            data["shortened"] = "Yes"
+        else:
+            data["shortened"] = "No"
+
+        return render_template('results/phishingresults.html', data=data)
+    return render_template('error/invalid.html')
 
 
 @app.route('/api/trace', methods=['POST'])
 def trace():
     phone = request.form.get('phone')
-    print("##########", phone)
-    return render_template('results/tracecallresults.html')
+    data = process_number(phone)
+    print(data)
+    print(type(data))
+    location = data["region"]
+    lat_long = get_approx_coordinates(location)
+    data["lat_long"] = lat_long
+    return render_template('results/tracecallresults.html', data=data)
 
 
 @app.route('/api/scanurl', methods=['POST'])
@@ -144,22 +176,51 @@ def scan_url():
     return render_template('error/invalid.html')
 
 
-# @app.route("/predict_spam", methods=["GET"])
-# def check_spam():
-#     input_text = ("Dear Sir/Mam, We need Regional Staff store salary 17800/-. Contact HR on "
-#                   "https://wa.me/919505335971 Insta Staff")
-#     prediction_nb, prediction_svm, prediction_lr, prediction_dt = predict_spam(input_text, cv)
-#     print("Multinomial Naive Bayes Prediction:", prediction_nb)
-#     print("Support Vector Machine Prediction:", prediction_svm)
-#     print("Logistic Regression Prediction:", prediction_lr)
-#     print("Decision Tree Prediction:", prediction_dt)
-#
-#     spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt) * 100) / 4
-#
-#     if spam_score <= 25:
-#         return f"The text is not likely SPAM. Spam score: {spam_score}%"
-#     else:
-#         return f"The text is likely SPAM with a confidence score of {spam_score}%"
+@app.route('/api/detectspam', methods=['POST'])
+def check_spam():
+    message = request.form.get('message')
+    phone = request.form.get('phone')
+    email = request.form.get('email')
+    if message:
+        prediction_nb, prediction_svm, prediction_lr, prediction_dt = predict_spam(message, cv)
+        print("Multinomial Naive Bayes Prediction:", prediction_nb)
+        print("Support Vector Machine Prediction:", prediction_svm)
+        print("Logistic Regression Prediction:", prediction_lr)
+        print("Decision Tree Prediction:", prediction_dt)
+
+        spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt) * 100) / 4
+
+        data = {
+            "input_msg": message,
+            "spam_score": spam_score,
+            "vector": "",
+            "sender": "",
+            "status": "",
+            "current_timestamp": get_timestamp(),
+            "do": {},
+            "do_not": {},
+
+        }
+
+        if phone:
+            data["vector"] = "Phone"
+            data["sender"] = phone
+        elif email:
+            data["vector"] = "Email"
+            data["sender"] = email
+
+        if spam_score < 25:
+            data["status"] = "Not Spam"
+        elif 25 <= spam_score <= 50:
+            data["status"] = "Less likely to be Spam"
+        elif 50 <= spam_score <= 75:
+            data["status"] = "More likely to be Spam"
+        else:
+            data["status"] = "Spam"
+
+        return render_template('results/spamresults.html', data=data)
+
+    return render_template('error/invalid.html')
 
 
 if __name__ == '__main__':
