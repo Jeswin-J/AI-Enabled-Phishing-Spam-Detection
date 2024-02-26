@@ -19,6 +19,7 @@ def calc_phishing_score(features):
         "m_over": 1.5,
         "head_script": 2,
         "have_num": 1.5,
+        "favicon": 2,
     }
 
     phishing_score = 0

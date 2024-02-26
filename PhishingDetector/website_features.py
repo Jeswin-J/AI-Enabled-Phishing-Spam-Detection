@@ -1,4 +1,7 @@
 import re
+from urllib.parse import urljoin, urlparse
+
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -53,4 +56,20 @@ def check_head_script(response):
                     return 1
     except Exception as e:
         print(f"Error: {e}")
+    return 0
+
+
+def check_favicon(response, url):
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        favicon_link = soup.find("link", rel="icon")
+        if favicon_link:
+            favicon_url = urljoin(url, favicon_link.get("href"))
+            parsed_url = urlparse(url)
+            parsed_favicon_url = urlparse(favicon_url)
+            if parsed_favicon_url.netloc != parsed_url.netloc:
+                return 1
+    except Exception as e:
+        print(f"Error occurred: {e}")
     return 0

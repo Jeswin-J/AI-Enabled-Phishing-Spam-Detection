@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block navLink %}
+  <li><a class="nav-link scrollto" href="/">Home</a></li>
+  <li><a class="nav-link scrollto" href="/spamdetector">Spam Detector</a></li>
+  <li><a class="nav-link scrollto" href="/phishingdetector">Phishing Detector</a></li>
+  <li><a class="nav-link scrollto active" href="/urlscanner">URL Scanner</a></li>
+  <li><a class="nav-link scrollto" href="/tracecall">Trace Call</a></li>
+{% endblock %}
+
 {% block heroContent %}
 
 <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">

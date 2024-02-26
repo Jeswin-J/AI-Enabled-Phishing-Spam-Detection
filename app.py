@@ -1,4 +1,3 @@
-
 import requests
 from flask import Flask, render_template, request
 from Utils.utils import *
@@ -51,8 +50,21 @@ def check_spam():
 def check_phishing():
     url = request.form.get('url')
     if is_valid_url(url):
-
         response = requests.get(url)
+
+        data = {
+            "protocol": "",
+            "src_url": url,
+            "redir_url": "",
+            "status": "",
+            "phishing_score": "",
+            "redir_count": "",
+            "is_homograph": "",
+            "shortened": "",
+            "current_timestamp": get_timestamp(),
+            "do": {},
+            "do_not": {},
+        }
 
         features = {
             "protocol": check_url_protocol(url),
@@ -71,12 +83,42 @@ def check_phishing():
             "m_over": mouse_over(response),
             "head_script": check_head_script(response),
             "num_domain": have_num(url),
+            "favicon": check_favicon(response, url),
         }
 
-        risk_score = calc_phishing_score(features)
-        print(risk_score)
+        if features["protocol"]:
+            data["protocol"] = "http"
+        else:
+            data["protocol"] = "http"
 
-        return render_template('results/phishingresults.html')
+        risk_score = calc_phishing_score(features)
+
+        data["phishing_score"] = risk_score
+
+        if risk_score >= 50:
+            data["status"] = "Phishing"
+        elif 50 > risk_score >= 15:
+            data["status"] = "Suspicious"
+        else:
+            data["status"] = "Legitimate"
+
+        if features["homograph"]:
+            data["is_homograph"] = "Yes"
+        else:
+            data["is_homograph"] = "No"
+
+        if features["short"]:
+            data["shortened"] = "Yes"
+        else:
+            data["shortened"] = "No"
+
+
+
+
+
+
+
+        return render_template('results/phishingresults.html', data=data)
     return "INVALID"
 
 
