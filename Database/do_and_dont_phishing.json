@@ -1,0 +1,66 @@
+{
+  "dont" : {
+    "dont_one": ["Do not interact with the phishing website or provide any personal or sensitive information.",
+              "Do not try to log in or provide any credentials on the phishing page, since this might compromise your security.",
+              "Under no circumstances should you engage with the phishing website or disclose any personal or sensitive information.",
+              "Avoid interacting with the phishing website or divulging any personal or sensitive information.",
+              "Refrain from engaging with the phishing website or sharing any personal or sensitive details."
+              ],
+    "dont_two": ["Abstain from hastily responding to urgent or threatening emails, taking the necessary time to verify the legitimacy of the sender and email content.",
+              "Refrain from hastily reacting to urgent or threatening emails, ensuring to allocate sufficient time to authenticate the sender's identity and scrutinize the content of the email for legitimacy.",
+              "Desist from hastily responding to urgent or threatening emails; allocate ample time to verify the sender's legitimacy and carefully scrutinize the email's content. Additionally, refrain from hastily clicking on any embedded links or downloading attachments until their authenticity has been confirmed.",
+              "Avoid hastily reacting to urgent or threatening emails; take the necessary time to authenticate the sender's identity and thoroughly examine the email's content for legitimacy. It is essential to refrain from immediately clicking on any links or downloading attachments until their authenticity has been verified.",
+              "Refrain from hastily responding to urgent or threatening emails; ensure to allocate sufficient time for verifying the sender's identity and thoroughly scrutinizing the email's content for legitimacy before taking any action such as clicking on links or downloading attachments."
+              ],
+    "dont_three": ["Do not engage with callers who refuse to identify themselves or pressure you into providing personal information; promptly end the call and report it if necessary.",
+              "Avoid interacting with callers who withhold their identity or attempt to coerce you into divulging personal information; terminate the call immediately and report any suspicious activity as needed.",
+              "Refrain from engaging with callers who decline to disclose their identity or attempt to manipulate you into sharing personal information; swiftly conclude the conversation and report any concerning behavior as required.",
+              "Do not entertain callers who withhold their identity or exert pressure on you to disclose personal information; promptly terminate the call and report any suspicious activity to the appropriate authorities, if necessary.",
+              "Avoid interacting with callers who withhold their identity or coerce you into revealing personal information; promptly terminate the call and escalate any concerning behavior to the relevant authorities, if needed."
+              ],
+    "dont_four": [" Refrain from placing trust in emails or calls from unverified sources, particularly those soliciting sensitive information or appearing too good to be true.",
+              "Avoid relying on emails or calls from unverified sources, especially those that request sensitive information or seem overly promising. It's essential to exercise caution when encountering such communications, as they may pose potential risks or deceptive intentions.",
+              "Abstain from placing confidence in emails or calls originating from unverified sources, particularly those that solicit sensitive information or present overly enticing offers. It is imperative to exercise caution when encountering such communications, as they may harbor potential risks or deceptive motives.",
+              "Refrain from trusting emails or calls from unverified sources, especially those that seek sensitive information or appear excessively promising. It's crucial to exercise caution when dealing with such communications, as they could carry potential risks or deceptive agendas.",
+              "Avoid relying on emails or calls from unverified sources, particularly those that request sensitive information or seem too good to be true. It's important to exercise caution when encountering such communications, as they may pose potential risks or deceptive intentions."
+              ],
+    "dont_five": ["Avoid opening files or clicking links in questionable or unwanted messages since they might download malware or lead to phishing websites.",
+              "Refrain from accessing files or clicking on links in suspicious or unwanted messages as they could result in the download of malware or redirect to phishing websites. It's essential to exercise caution when dealing with such messages to prevent potential security breaches or unauthorized access to personal information.",
+              "Avoid opening attachments or following links in questionable or unwanted messages, as they may inadvertently download malware or direct you to phishing websites. It is crucial to exercise caution when encountering such messages to mitigate the risk of cybersecurity threats and protect personal information.",
+              "Refrain from interacting with attachments or clicking on links in uncertain or unwanted messages, as they may result in the installation of malware or redirect to phishing sites. It is essential to exercise caution when encountering such messages to mitigate the risk of cybersecurity breaches and protect sensitive information.",
+              "Avoid interacting with attachments or clicking on links in uncertain or unwanted messages, as they may install malware or lead to phishing sites. Stay cautious to prevent cybersecurity breaches and protect sensitive information."
+              ]
+  },
+  "do" : {
+    "do_one": ["Immediately report the phishing website to relevant authorities, such as web hosting providers, domain registrars, or law enforcement agencies.",
+              "Stay vigilant for any signs of phishing attempts, such as suspicious emails, fake websites, or unauthorized access attempts.",
+              "Promptly inform the relevant authorities, including web hosting providers, domain registrars, or law enforcement agencies, about the phishing website. It's crucial to take swift action to address the issue and prevent further harm.",
+              "Timely reporting is essential to mitigate the risks and ensure appropriate measures are taken to address the threat.",
+              "Quickly notify the appropriate authorities, such as web hosting providers, domain registrars, or law enforcement agencies, about the existence of the phishing website."
+              ],
+    "do_two": ["Employ caller ID features on your phone to identify incoming callers, verifying their identity prior to disclosing any sensitive information.",
+              "Make use of the caller ID feature on your phone to identify incoming callers, verifying their identity before disclosing any sensitive information.",
+              "Utilize your phone's caller ID feature to identify incoming callers, ensuring to authenticate their identity before sharing any sensitive information.",
+              "Leverage the caller ID functionality on your phone to identify incoming calls, verifying the caller's identity prior to disclosing sensitive information.",
+              "Utilize the caller ID feature on your phone to ascertain the identity of incoming calls, ensuring authentication before disclosing sensitive information."
+              ],
+    "do_three": ["Report phishing emails promptly to your email provider or relevant authorities to prevent others from being victimized by similar scams.",
+              " Promptly notify your email provider or relevant authorities about phishing emails to prevent others from falling victim to similar scams.",
+              "Swiftly inform your email service provider or the appropriate authorities regarding phishing emails to shield others from succumbing to identical fraudulent schemes. ",
+              "Take immediate action to alert your email provider or relevant authorities about phishing emails, thereby shielding others from potential exploitation in similar scams.",
+              "Rapidly notify your email provider or the pertinent authorities about phishing emails, thereby safeguarding others from potential exploitation in similar fraudulent activities."
+              ],
+    "do_four": ["Learn about common phishing tactics and educate others to recognize them.",
+              "Acquire knowledge about prevalent phishing strategies and disseminate this information to help others identify and thwart such deceptive tactics. ",
+              "Gain familiarity with typical phishing tactics and instruct others on how to discern and counteract these deceptive methods.",
+              "Acquaint yourself with common phishing action and instruct others on how to detect and combat these deceitful techniques effectively.",
+              "Familiarize yourself with typical phishing action and educate others on how to identify and counteract these deceptive tactics efficiently."
+              ],
+    "do_five": ["Always verify the sender's email address before interacting with any links or attachments.",
+                "Prior to engaging with any links or attachments, it is essential to consistently authenticate the sender's email address.",
+                "It is essential to always verify the email address of the sender before clicking on any links or files.",
+                "Ensure the sender's email address is verified before interacting with any links or attachments.",
+                "Prioritize confirming the authenticity of the sender's email address before engaging with any links or attachments."
+               ]
+  }
+}
