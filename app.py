@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 from Utils.utils import *
 
-# from SpamDetector.model import cv
-# from SpamDetector.utils import predict_spam
+from SpamDetector.model import cv
+from SpamDetector.utils import predict_spam
 
 from UrlScanner.url_scanner import *
 from PhishingDetector.url_features import *
@@ -176,51 +176,51 @@ def scan_url():
     return render_template('error/invalid.html')
 
 
-# @app.route('/api/detectspam', methods=['POST'])
-# def check_spam():
-#     message = request.form.get('message')
-#     phone = request.form.get('phone')
-#     email = request.form.get('email')
-#     if message:
-#         prediction_nb, prediction_svm, prediction_lr, prediction_dt = predict_spam(message, cv)
-#         print("Multinomial Naive Bayes Prediction:", prediction_nb)
-#         print("Support Vector Machine Prediction:", prediction_svm)
-#         print("Logistic Regression Prediction:", prediction_lr)
-#         print("Decision Tree Prediction:", prediction_dt)
-#
-#         spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt) * 100) / 4
-#
-#         data = {
-#             "input_msg": message,
-#             "spam_score": spam_score,
-#             "vector": "",
-#             "sender": "",
-#             "status": "",
-#             "current_timestamp": get_timestamp(),
-#             "do": {},
-#             "do_not": {},
-#
-#         }
-#
-#         if phone:
-#             data["vector"] = "Phone"
-#             data["sender"] = phone
-#         elif email:
-#             data["vector"] = "Email"
-#             data["sender"] = email
-#
-#         if spam_score < 25:
-#             data["status"] = "Not Spam"
-#         elif 25 <= spam_score <= 50:
-#             data["status"] = "Less likely to be Spam"
-#         elif 50 <= spam_score <= 75:
-#             data["status"] = "More likely to be Spam"
-#         else:
-#             data["status"] = "Spam"
-#
-#         return render_template('results/spamresults.html', data=data)
-#
-#     return render_template('error/invalid.html')
+@app.route('/api/detectspam', methods=['POST'])
+def check_spam():
+    message = request.form.get('message')
+    phone = request.form.get('phone')
+    email = request.form.get('email')
+    if message:
+        prediction_nb, prediction_svm, prediction_lr, prediction_dt = predict_spam(message, cv)
+        print("Multinomial Naive Bayes Prediction:", prediction_nb)
+        print("Support Vector Machine Prediction:", prediction_svm)
+        print("Logistic Regression Prediction:", prediction_lr)
+        print("Decision Tree Prediction:", prediction_dt)
+
+        spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt) * 100) / 4
+
+        data = {
+            "input_msg": message,
+            "spam_score": spam_score,
+            "vector": "",
+            "sender": "",
+            "status": "",
+            "current_timestamp": get_timestamp(),
+            "do": {},
+            "do_not": {},
+
+        }
+
+        if phone:
+            data["vector"] = "Phone"
+            data["sender"] = phone
+        elif email:
+            data["vector"] = "Email"
+            data["sender"] = email
+
+        if spam_score < 25:
+            data["status"] = "Not Spam"
+        elif 25 <= spam_score <= 50:
+            data["status"] = "Less likely to be Spam"
+        elif 50 <= spam_score <= 75:
+            data["status"] = "More likely to be Spam"
+        else:
+            data["status"] = "Spam"
+
+        return render_template('results/spamresults.html', data=data)
+
+    return render_template('error/invalid.html')
 
 
 if __name__ == '__main__':
