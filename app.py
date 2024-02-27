@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
 from Utils.utils import *
 
-from SpamDetector.model import cv
+from SpamDetector.msg_classification_model import cv
+from SpamDetector.sub_classification_model import analyse_subject
 from SpamDetector.utils import predict_spam
 
 from UrlScanner.url_scanner import *
@@ -180,6 +181,7 @@ def scan_url():
 def check_spam():
     message = request.form.get('message')
     phone = request.form.get('phone')
+    subject = request.form.get('subject')
     email = request.form.get('email')
     if message:
         prediction_nb, prediction_svm, prediction_lr, prediction_dt = predict_spam(message, cv)
@@ -188,7 +190,11 @@ def check_spam():
         print("Logistic Regression Prediction:", prediction_lr)
         print("Decision Tree Prediction:", prediction_dt)
 
-        spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt) * 100) / 4
+        subject = "Special discount offer!"
+
+        sub_analysis = analyse_subject(subject)
+
+        spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt + sub_analysis) * 100) / 5
 
         data = {
             "input_msg": message,
