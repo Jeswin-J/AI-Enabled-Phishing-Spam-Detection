@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 import re
+import nltk
+nltk.download ("stopwords")
+nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -11,6 +14,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import LabelEncoder
 import joblib
+
+
+
 
 
 # Load dataset and perform preprocessing
