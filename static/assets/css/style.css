@@ -555,7 +555,7 @@ section {
 /*--------------------------------------------------------------
 # About
 --------------------------------------------------------------*/
-.about .content h3 {
+/* .about .content h3 {
   font-weight: 600;
   font-size: 26px;
 }
@@ -607,12 +607,12 @@ section {
   background: #2487ce;
   color: #fff;
   text-decoration: none;
-}
+} */
 
 /*--------------------------------------------------------------
 # Counts
 --------------------------------------------------------------*/
-.counts {
+/* .counts {
   padding: 60px 0;
 }
 
@@ -637,12 +637,12 @@ section {
   font-weight: 600;
   font-size: 14px;
   color: #1e6ca6;
-}
+} */
 
 /*--------------------------------------------------------------
 # About Video
 --------------------------------------------------------------*/
-.about-video .content {
+/* .about-video .content {
   font-size: 15px;
 }
 
@@ -752,12 +752,12 @@ section {
     transform: scale(1, 1);
     opacity: 0;
   }
-}
+} */
 
 /*--------------------------------------------------------------
 # Clients
 --------------------------------------------------------------*/
-.clients {
+/* .clients {
   padding: 15px 0;
   text-align: center;
 }
@@ -773,18 +773,18 @@ section {
 .clients img:hover {
   filter: none;
   transform: scale(1.15);
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .clients img {
     max-width: 40%;
   }
-}
+} */
 
 /*--------------------------------------------------------------
 # Testimonials
 --------------------------------------------------------------*/
-.testimonials .testimonials-carousel,
+/* .testimonials .testimonials-carousel,
 .testimonials .testimonials-slider {
   overflow: hidden;
 }
@@ -870,12 +870,12 @@ section {
 
 .testimonials .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #2487ce;
-}
+} */
 
 /*--------------------------------------------------------------
 # Services
 --------------------------------------------------------------*/
-.services .icon-box {
+/* .services .icon-box {
   text-align: center;
   padding: 70px 20px 80px 20px;
   transition: all ease-in-out 0.3s;
@@ -1003,12 +1003,12 @@ section {
 
 .services .iconbox-teal:hover .icon path {
   fill: #11dbcf;
-}
+} */
 
 /*--------------------------------------------------------------
 # Cta
 --------------------------------------------------------------*/
-.cta {
+/* .cta {
   background: #2487ce;
   background-size: cover;
   padding: 60px 0;
@@ -1041,12 +1041,12 @@ section {
 .cta .cta-btn:hover {
   background: #fff;
   color: #2487ce;
-}
+} */
 
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
-.portfolio .portfolio-item {
+/* .portfolio .portfolio-item {
   margin-bottom: 30px;
 }
 
@@ -1201,7 +1201,7 @@ section {
 /*--------------------------------------------------------------
 # Portfolio Details
 --------------------------------------------------------------*/
-.portfolio-details {
+/* .portfolio-details {
   padding-top: 40px;
 }
 
@@ -1261,12 +1261,12 @@ section {
 
 .portfolio-details .portfolio-description p {
   padding: 0;
-}
+}  */
 
 /*--------------------------------------------------------------
 # Team
 --------------------------------------------------------------*/
-.team .member {
+/* .team .member {
   margin-bottom: 20px;
   overflow: hidden;
   text-align: center;
@@ -1339,12 +1339,12 @@ section {
 
 .team .member:hover .social {
   opacity: 1;
-}
+} */
 
 /*--------------------------------------------------------------
 # Pricing
 --------------------------------------------------------------*/
-.pricing .box {
+/* .pricing .box {
   padding: 40px 20px;
   text-align: center;
   border-radius: 8px;
@@ -1450,7 +1450,7 @@ section {
 .pricing .featured .btn-buy:hover {
   background: #fff;
   color: #2487ce;
-}
+} */
 
 /*--------------------------------------------------------------
 # Frequently Asked Questions
@@ -1537,7 +1537,7 @@ section {
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
-.contact .info {
+/* .contact .info {
   width: 100%;
   background: #fff;
 }
@@ -1675,12 +1675,12 @@ section {
   100% {
     transform: rotate(360deg);
   }
-}
+} */
 
 /*--------------------------------------------------------------
 # Breadcrumbs
 --------------------------------------------------------------*/
-.breadcrumbs {
+/* .breadcrumbs {
   padding: 15px 0;
   background: #f8fbfe;
   min-height: 40px;
@@ -1730,7 +1730,7 @@ section {
   .breadcrumbs ol li {
     display: inline-block;
   }
-}
+} */
 
 /*--------------------------------------------------------------
 # Footer
