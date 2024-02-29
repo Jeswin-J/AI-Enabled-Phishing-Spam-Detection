@@ -1,18 +1,38 @@
-const generateHTML = (pageName) => {
+const generateHTML = (riskScore) => {
     return `
-        <h1 class="heading">${pageName} Website is not safe</h1>
+        <div class="container">
+            <h1>This Website is Suspicious</h1>
+            <p>This Website have high risk Score of ${riskScore}</p>
+        </div>
     `;
 };
 
 const generateCSS = () => {
     return `
     <style>
-    .heading {
-            color: blue;
-            font-size: 100px;
-            text-align:center
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
         }
-    </style>    
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #ff6347;
+        }
+    </style>
     `;
 };
 
@@ -28,20 +48,20 @@ function checkURL(url) {
         })
         .then(response => response.json())
         .then(data => {
-            resolve(data.status);
+            resolve({ status: data.status, risk_score: data.risk_score });
         })
         .catch(error => {
             reject(error);
         });
     })
-    .then(status => {
+    .then(({ status, risk_score }) => {
 
         if (status === "Phishing") {
             document.head.innerHTML = generateCSS();
-            document.body.innerHTML = generateHTML("github");
+            document.body.innerHTML = generateHTML(risk_score);
         }else if (status === "Suspicious") {
             document.head.innerHTML = generateCSS();
-            document.body.innerHTML = generateHTML("github");
+            document.body.innerHTML = generateHTML(risk_score);
         }
 
     });
