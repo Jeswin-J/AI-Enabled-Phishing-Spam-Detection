@@ -1,16 +1,17 @@
-from flask import Flask, render_template, request
-from Utils.utils import *
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 
+from PhishingDetector.url_features import *
+from PhishingDetector.website_features import *
 from SpamDetector.msg_classification_model import cv
 from SpamDetector.sub_classification_model import analyse_subject
 from SpamDetector.utils import predict_spam
-
-from UrlScanner.url_scanner import *
-from PhishingDetector.url_features import *
-from PhishingDetector.website_features import *
 from TraceCall.trace_call import *
+from UrlScanner.url_scanner import *
+from Utils.utils import *
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
@@ -44,6 +45,8 @@ def check_phishing():
     if is_valid_url(url):
         response = requests.get(url)
 
+        recommendation = read_json("Database/do_and_dont_phishing.json")
+
         data = {
             "protocol": "",
             "src_url": url,
@@ -54,8 +57,16 @@ def check_phishing():
             "is_homograph": "",
             "shortened": "",
             "current_timestamp": get_timestamp(),
-            "do": {},
-            "do_not": {},
+            "do": {
+                "do_1": get_random_recommend(recommendation, 'do'),
+                "do_2": get_random_recommend(recommendation, 'do'),
+                "do_3": get_random_recommend(recommendation, 'do'),
+            },
+            "do_not": {
+                "dont_1": get_random_recommend(recommendation, 'dont'),
+                "dont_2": get_random_recommend(recommendation, 'dont'),
+                "dont_3": get_random_recommend(recommendation, 'dont')
+            },
         }
 
         features = {
@@ -81,7 +92,7 @@ def check_phishing():
         if features["protocol"]:
             data["protocol"] = "http"
         else:
-            data["protocol"] = "http"
+            data["protocol"] = "https"
 
         risk_score = calc_phishing_score(features)
 
@@ -103,6 +114,21 @@ def check_phishing():
             data["shortened"] = "Yes"
         else:
             data["shortened"] = "No"
+
+        # url_features = feature_extraction(url)
+        # print(url_features)
+        #
+        # filename = 'PhishingDetector/ml_model/xgboost_model.joblib'
+        # xgb = joblib.load(filename)
+        #
+        # input_data = pd.DataFrame(np.array(url_features).reshape(1, -1))
+        #
+        # prediction = xgb.predict(input_data)
+        #
+        # # Reorder the columns of input_data to match the expected feature order
+        # # Make predictions
+        # # Print prediction
+        # print("Prediction:", prediction)
 
         return render_template('results/phishingresults.html', data=data)
     return render_template('error/invalid.html')
@@ -151,6 +177,7 @@ def scan_url():
         data = {
             'tld': tld,
             'ip_address': ip_addr,
+            'host': host_name(ip_addr),
             'location': location,
             'asn': ip_info['asn'],
             'asn_registry': ip_info['asn_registry'],
@@ -172,6 +199,8 @@ def scan_url():
             'is_phishing': '--',
             'phishing_score': '--',
         }
+
+        print(data['location'])
 
         return render_template('results/urlscanresults.html', data=data)
     return render_template('error/invalid.html')
@@ -196,6 +225,8 @@ def check_spam():
 
         spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt + sub_analysis) * 100) / 5
 
+        recommendation = read_json("Database/do_and_dont_spam.json")
+
         data = {
             "input_msg": message,
             "spam_score": spam_score,
@@ -203,8 +234,16 @@ def check_spam():
             "sender": "",
             "status": "",
             "current_timestamp": get_timestamp(),
-            "do": {},
-            "do_not": {},
+            "do": {
+                "do_1": get_random_recommend(recommendation, 'do'),
+                "do_2": get_random_recommend(recommendation, 'do'),
+                "do_3": get_random_recommend(recommendation, 'do'),
+            },
+            "do_not": {
+                "dont_1": get_random_recommend(recommendation, 'dont'),
+                "dont_2": get_random_recommend(recommendation, 'dont'),
+                "dont_3": get_random_recommend(recommendation, 'dont')
+            },
 
         }
 
@@ -229,5 +268,47 @@ def check_spam():
     return render_template('error/invalid.html')
 
 
+@app.route('/extn/detect', methods=['POST'])
+def detect_spam_and_phishing():
+    data = request.json
+    url = data.get('url')
+
+    response = requests.get(url)
+
+    features = {
+        "protocol": check_url_protocol(url),
+        "at_sign": check_at_sign(url),
+        "ip_in_domain": have_ip_addr(url),
+        "url_length": check_url_length(url),
+        "redirection": have_redirection(url),
+        "https_in_domain": check_https_domain(url),
+        "dash": have_dash(url),
+        "upper_case": is_domain_upper(url),
+        "homograph": check_homograph(url),
+        "short": check_tiny_url(url),
+        "iframe": have_iframe(response),
+        "forward": forwarding(response),
+        "r_click": right_click(response),
+        "m_over": mouse_over(response),
+        "head_script": check_head_script(response),
+        "num_domain": have_num(url),
+        "favicon": check_favicon(response, url),
+    }
+
+    risk_score = calc_phishing_score(features)
+
+    if risk_score >= 50:
+        status = "Phishing"
+    elif 50 > risk_score >= 15:
+        status = "Suspicious"
+    else:
+        status = "Legitimate"
+
+    print(status)
+
+    # Return JSON response with the result
+    return jsonify({'status': status}), 200
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

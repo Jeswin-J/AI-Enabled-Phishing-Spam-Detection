@@ -1,4 +1,7 @@
 from datetime import datetime, timezone, timedelta
+import random
+
+from DatabaseHandler.json_handler import read_json
 
 
 def calc_phishing_score(features):
@@ -41,3 +44,10 @@ def get_timestamp():
     current_time_target_timezone = current_time_utc.astimezone(target_timezone)
     current_timestamp = current_time_target_timezone.strftime("%Y-%m-%dT%H:%M:%S%z")
     return current_timestamp
+
+
+def get_random_recommend(data, key):
+    inner_keys = list(data[key].keys())
+    random_inner_key = random.choice(inner_keys)
+    random_recommendation = random.choice(data[key][random_inner_key])
+    return random_recommendation

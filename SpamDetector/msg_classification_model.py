@@ -1,25 +1,20 @@
-import numpy as np
-import pandas as pd
 import re
-import nltk
+
+import joblib
+import pandas as pd
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
 # nltk.download ("stopwords")
 # nltk.download('punkt')
 from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import LabelEncoder
-import joblib
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 
 
-
-
-
-# Load dataset and perform preprocessing
 def preprocess_data(dataset_path):
     dataset = pd.read_csv(dataset_path, encoding='latin-1')
     stemmer = PorterStemmer()
