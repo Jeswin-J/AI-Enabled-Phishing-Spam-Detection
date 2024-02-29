@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, jsonify
+import joblib
+import numpy as np
+import pandas as pd
+from flask import Flask, render_template, request, jsonify, redirect
 from flask_cors import CORS
 
+from PhishingDetector.features import feature_extraction
 from PhishingDetector.url_features import *
 from PhishingDetector.website_features import *
 from SpamDetector.msg_classification_model import cv
@@ -115,20 +119,19 @@ def check_phishing():
         else:
             data["shortened"] = "No"
 
-        # url_features = feature_extraction(url)
-        # print(url_features)
-        #
-        # filename = 'PhishingDetector/ml_model/xgboost_model.joblib'
-        # xgb = joblib.load(filename)
-        #
-        # input_data = pd.DataFrame(np.array(url_features).reshape(1, -1))
-        #
-        # prediction = xgb.predict(input_data)
-        #
-        # # Reorder the columns of input_data to match the expected feature order
-        # # Make predictions
-        # # Print prediction
-        # print("Prediction:", prediction)
+        url_features = feature_extraction(url)
+        print(url_features)
+
+        filename = 'PhishingDetector/ml_model/xgboost_model.joblib'
+        xgb = joblib.load(filename)
+
+        print(xgb)
+
+        input_data = pd.DataFrame(np.array(url_features).reshape(1, -1))
+
+        prediction = xgb.predict(input_data)
+
+        print("Prediction:", prediction)
 
         return render_template('results/phishingresults.html', data=data)
     return render_template('error/invalid.html')
@@ -137,13 +140,19 @@ def check_phishing():
 @app.route('/api/trace', methods=['POST'])
 def trace():
     phone = request.form.get('phone')
-    data = process_number(phone)
-    print(data)
-    print(type(data))
-    location = data["region"]
-    lat_long = get_approx_coordinates(location)
-    data["lat_long"] = lat_long
-    return render_template('results/tracecallresults.html', data=data)
+
+    try:
+        parsed_phone = phonenumbers.parse(phone, None)
+        is_valid = phonenumbers.is_valid_number(parsed_phone)
+        if is_valid:
+            data = process_number(phone)
+            location = data["region"]
+            lat_long = get_approx_coordinates(location)
+            data["lat_long"] = lat_long
+            
+            return render_template('results/tracecallresults.html', data=data)
+    except Exception as e:
+        return render_template('error/invalid.html')
 
 
 @app.route('/api/scanurl', methods=['POST'])
