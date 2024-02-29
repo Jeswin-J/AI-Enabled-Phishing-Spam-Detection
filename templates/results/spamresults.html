@@ -91,12 +91,24 @@
                         <div class="col-md-12">
                             <div style="margin-top: 20px;">
                             <h6 class="card-subtitle mb-2 text-body-secondary"><b>Do's:</b></h6>
-                            <p class="card-text">{{ data }}</p>
+                            <p class="card-text">
+                                <ul>
+                                <li>{{ data["do"]["do_1"] }}</li>
+                                <li>{{ data["do"]["do_2"] }}</li>
+                                <li>{{ data["do"]["do_3"] }}</li>
+                                </ul>
+                            </p>
                         </div>
                         <div class="col-md-12">
                             <div style="margin-top: 20px;">
                             <h6 class="card-subtitle mb-2 text-body-secondary"><b>Don't:</b></h6>
-                            <p class="card-text">{{ data }}</p>
+                            <p class="card-text">
+                                <ul>
+                                <li>{{ data["do_not"]["dont_1"] }}</li>
+                                <li>{{ data["do_not"]["dont_2"] }}</li>
+                                <li>{{ data["do_not"]["dont_3"] }}</li>
+                                </ul>
+                            </p>
                             </div>
                         </div>
                     </div>

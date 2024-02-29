@@ -18,7 +18,10 @@ def ip_address(url):
 
 
 def host_name(ip_addr):
-    host = socket.gethostbyaddr(ip_addr)
+    try:
+        host = socket.gethostbyaddr(ip_addr)
+    except Exception as e:
+        host = "--"
     return host
 
 
@@ -41,5 +44,8 @@ def ip_information(ip_addr):
 
 
 def url_tld(url):
-    tld = get_tld(url)
+    try:
+        tld = get_tld(url)
+    except Exception as e:
+        tld = "--"
     return tld
