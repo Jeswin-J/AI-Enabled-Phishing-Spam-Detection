@@ -1,0 +1,66 @@
+{
+    "dont" : {
+      "dont_one": ["Avoid disabling spam filtering as it leaves your inbox vulnerable to spam emails.",
+                "Refrain from deactivating spam filtering as it exposes your inbox to potential spam emails, increasing the risk of receiving unwanted or malicious messages.",
+                "Avoid disabling spam filtering, as this action exposes your inbox to potential spam emails, thereby elevating the risk of receiving unwanted or malicious messages.",
+                "Refuse to disable spam filtering, as doing so exposes your inbox to potential spam emails, thereby raising the risk of receiving unwanted or malicious messages.",
+                "Abstain from deactivating spam filtering, as it puts your inbox at risk of receiving potential spam emails, thereby increasing the chances of encountering unwanted or malicious content."
+                ],
+      "dont_two": ["Avoid sharing spam emails with others as it may contribute to the spread of spam.",
+                "Refrain from distributing spam emails to others as it could potentially aid in the propagation of spam.",
+                "Avoid forwarding unwanted messages to other individuals, since this might unintentionally contribute to the spread of spam.",
+                "Don't forward spam emails to other people; you can unintentionally contribute to the increasing amount of spam.",
+                "Avoid forwarding unwanted messages to other people, since this could accidentally promote the spread of spam."
+                ],
+      "dont_three": ["Don't bypass the quarantine folder without checking its contents for legitimate emails.",
+                "Avoid overlooking the quarantine folder without thoroughly examining its contents for legitimate emails.",
+                " Refrain from skipping over the quarantine folder without carefully reviewing its contents for legitimate emails. ",
+                " Do not disregard the quarantine folder without thoroughly inspecting its contents for legitimate emails.",
+                "Do not ignore the quarantine folder without conducting a thorough check of its contents for legitimate emails."
+                ],
+      "dont_four": ["Don't overlook software updates for your spam detector as they may contain crucial improvements.",
+                "Avoid neglecting software updates for your spam detector, as they could include essential enhancements.",
+                "Refrain from disregarding software updates for your spam detector, as they might incorporate critical improvements.",
+                "Do not dismiss software updates for your spam detector, as they may encompass significant improvements.",
+                "Avoid disregarding software updates for your spam detector, as they may encompass vital enhancements."
+                ],
+      "dont_five": ["Don't ignore warning signs of potential spam such as suspicious sender addresses or subject lines.",
+                "Avoid neglecting warning signs of potential spam, such as suspicious sender addresses or subject lines.",
+                "Refrain from overlooking warning signs of potential spam, such as suspicious sender addresses or subject lines.",
+                "Do not disregard warning signs of potential spam, such as suspicious sender addresses or subject lines.",
+                "Avoid dismissing warning signs of potential spam, such as suspicious sender addresses or subject lines."
+                ]
+    },
+    "do" : {
+      "do_one": ["Activate spam detection features in your email client or utilize third-party spam detectors.",
+                "Enable spam detection features in your email client or make use of third-party spam detectors.",
+                "Utilize spam detection features in your email client or opt for third-party spam detectors.",
+                "Activate spam detection features in your email client or consider employing third-party spam detectors.",
+                "Engage the spam detection features in your email client or explore the option of using third-party spam detectors."
+                ],
+      "do_two": [" Ensure your spam detector is regularly updated to detect new spam patterns and techniques.",
+                "Make sure to regularly update your spam detector to identify new spam patterns and techniques.",
+                "Ensure that your spam detector receives regular updates to stay current in detecting new spam patterns and techniques.",
+                "Regularly update your spam detector to stay abreast of new spam patterns and techniques for detection.",
+                " Keep your spam detector updated regularly to remain vigilant against emerging spam patterns and techniques."
+                ],
+      "do_three": ["Customize spam detection settings to fit your preferences and needs.",
+                "Adjust spam detection settings according to your preferences and requirements.",
+                "Modify the spam detection settings to align with your preferences and requirements.",
+                "Personalize the spam detection settings to suit your preferences and specific needs.",
+                "Configure the spam detection settings to cater to your individual preferences and unique requirements."
+                ],
+      "do_four": [" Emails promising unrealistic rewards or promoting illegal activities are prime spam indicators.",
+                "Emails that promoted illegal activities or made generous reward promises were clear signs of spam.",
+                "Emails that encouraged criminal conduct or made expensive reward promises are a surefire sign of spam.",
+                " Unrealistic rewards are promised or illegal activities are promoted in emails that are considered prime spam indicators.",
+                "Prime spam indications have been emails that promote unlawful activity or make unrealistic reward promises."
+                ],
+      "do_five": [" Emails from free email providers like Gmail or Yahoo might be more likely to be spam compared to emails from established business domains.",
+                "Compared to emails from reputable company domains, emails from free email providers like Gmail or Yahoo may have a higher likelihood of being spam.",
+                "As opposed to emails from legitimate domains, emails from free email providers like Gmail or Yahoo may have an increased probability of being spam.",
+                "Conversely to emails from reliable domains, emails from free email providers like Gmail or Yahoo may have an increased risk of being spam.",
+                "versus emails from verified domains, emails from free email providers like Gmail or Yahoo may have an increased possibility of being considered spam."
+                ]
+    }
+  }

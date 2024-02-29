@@ -28,7 +28,7 @@
                             </div>
                             <div style="margin-top: 20px;">
                             <h6 class="card-subtitle mb-2 text-body-secondary"><b>Host Name:</b></h6>
-                            <p class="card-text">{{ data["location"]['hostname'] }}</p>
+                            <p class="card-text">{{ data['host'] }}</p>
                             </div>
                             <div style="margin-top: 20px;">
                             <h6 class="card-subtitle mb-2 text-body-secondary"><b>Network Handle:</b></h6>
@@ -109,14 +109,26 @@
                             <p class="card-text">{{ data["address_name"] }}</p>
                             </div>
                             <div style="margin-top: 20px;">
-                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Address:</b></h6>
-                            <p class="card-text">{{ data["address_info"] | safe}}</p>
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Region:</b></h6>
+                            <p class="card-text">{{ data["location"]["region"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Postal Code:</b></h6>
+                            <p class="card-text">{{ data["location"]["postal"]}}</p>
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div style="margin-top: 20px;">
-                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Country Code:</b></h6>
-                            <p class="card-text">{{ data["country_code"] }}</p>
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>City:</b></h6>
+                            <p class="card-text">{{ data["location"]["city"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>TimeZone:</b></h6>
+                            <p class="card-text">{{ data["location"]["timezone"] }}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><b>Country:</b></h6>
+                            <p class="card-text">{{ data["location"]["country"] }}</p>
                             </div>
                         </div>
                     </div>
