@@ -366,6 +366,25 @@ def detect_spam_and_phishing():
 
     return jsonify({'status': status, 'risk_score': risk_score}), 200
     #return jsonify({}), 200
+
+
+@app.route('/analyze_email', methods=['POST'])
+def analyze_email():
+    # Check if 'email_header' is in the POST request data
+    if 'email_header' not in request.form:
+        return jsonify({"error": "No email header provided"})
+
+    email_header = request.form['email_header']
+
+    # Analyze the email header
+    analysis_result = {}
+    try:
+        # Assuming parse_email takes the email header as a string
+        analysis_result = parse_email(email_header, doall=True)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+    return jsonify(analysis_result)
     
 
 
