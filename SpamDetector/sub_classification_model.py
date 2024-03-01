@@ -2,7 +2,8 @@ import io
 import string
 
 import pandas as pd
-# nltk.download('stopwords')
+import nltk
+#nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.ensemble import RandomForestClassifier as RFR

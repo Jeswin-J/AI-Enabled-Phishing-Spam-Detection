@@ -1,11 +1,12 @@
 import re
 
 import joblib
+import nltk
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
-# nltk.download ("stopwords")
-# nltk.download('punkt')
+nltk.download ("stopwords")
+nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
