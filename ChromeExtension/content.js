@@ -38,6 +38,7 @@ const generateCSS = () => {
 
 
 function checkURL(url) {
+    alert (url)
     return new Promise((resolve, reject) => {
         fetch('http://localhost:5000/extn/detect', {
             method: 'POST',

@@ -328,5 +328,8 @@ def detect_spam_and_phishing():
     return jsonify({'status': status, 'risk_score': risk_score}), 200
 
 
+    
+
+
 if __name__ == '__main__':
     app.run(debug=True)
