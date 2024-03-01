@@ -3,7 +3,7 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\dataset\spam.csv">
+        <entry key="\SpamDetector\dataset\spam.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

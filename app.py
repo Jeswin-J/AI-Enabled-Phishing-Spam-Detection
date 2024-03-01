@@ -1,15 +1,24 @@
-from flask import Flask, render_template, request
-from Utils.utils import *
+import pickle
 
-from SpamDetector.model import cv
-from SpamDetector.utils import predict_spam
+import joblib
+import numpy as np
+import pandas as pd
+from flask import Flask, render_template, request, jsonify, redirect
+from flask_cors import CORS
 
-from UrlScanner.url_scanner import *
+from PhishingDetector.feat import FeatureExtraction
+from PhishingDetector.features import feature_extraction
 from PhishingDetector.url_features import *
 from PhishingDetector.website_features import *
+from SpamDetector.msg_classification_model import cv
+from SpamDetector.sub_classification_model import analyse_subject
+from SpamDetector.utils import predict_spam
 from TraceCall.trace_call import *
+from UrlScanner.url_scanner import *
+from Utils.utils import *
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
@@ -43,6 +52,8 @@ def check_phishing():
     if is_valid_url(url):
         response = requests.get(url)
 
+        recommendation = read_json("Database/do_and_dont_phishing.json")
+
         data = {
             "protocol": "",
             "src_url": url,
@@ -53,8 +64,16 @@ def check_phishing():
             "is_homograph": "",
             "shortened": "",
             "current_timestamp": get_timestamp(),
-            "do": {},
-            "do_not": {},
+            "do": {
+                "do_1": get_random_recommend(recommendation, 'do'),
+                "do_2": get_random_recommend(recommendation, 'do'),
+                "do_3": get_random_recommend(recommendation, 'do'),
+            },
+            "do_not": {
+                "dont_1": get_random_recommend(recommendation, 'dont'),
+                "dont_2": get_random_recommend(recommendation, 'dont'),
+                "dont_3": get_random_recommend(recommendation, 'dont')
+            },
         }
 
         features = {
@@ -80,7 +99,7 @@ def check_phishing():
         if features["protocol"]:
             data["protocol"] = "http"
         else:
-            data["protocol"] = "http"
+            data["protocol"] = "https"
 
         risk_score = calc_phishing_score(features)
 
@@ -103,6 +122,26 @@ def check_phishing():
         else:
             data["shortened"] = "No"
 
+        url_features = feature_extraction(url)
+        print(url_features)
+
+        # obj = FeatureExtraction(url)
+        # x = np.array(obj.getFeaturesList()).reshape(1, 30)
+        #
+        # file = open("PhishingDetector/ml_model/model.joblib", "rb")
+        # # gbc = pickle.load(file)
+        #
+        # gbc = joblib.load(file)
+        #
+        # y_pred = gbc.predict(x)[0]
+        #
+        # y_pro_phishing = gbc.predict_proba(x)[0, 0]
+        # y_pro_non_phishing = gbc.predict_proba(x)[0, 1]
+        # # if(y_pred ==1 ):
+        # pred = "It is {0:.2f} safe to go ".format(y_pro_phishing * 100)
+        # xx = round(y_pro_non_phishing, 2)
+        # print(xx)
+
         return render_template('results/phishingresults.html', data=data)
     return render_template('error/invalid.html')
 
@@ -110,13 +149,19 @@ def check_phishing():
 @app.route('/api/trace', methods=['POST'])
 def trace():
     phone = request.form.get('phone')
-    data = process_number(phone)
-    print(data)
-    print(type(data))
-    location = data["region"]
-    lat_long = get_approx_coordinates(location)
-    data["lat_long"] = lat_long
-    return render_template('results/tracecallresults.html', data=data)
+
+    try:
+        parsed_phone = phonenumbers.parse(phone, None)
+        is_valid = phonenumbers.is_valid_number(parsed_phone)
+        if is_valid:
+            data = process_number(phone)
+            location = data["region"]
+            lat_long = get_approx_coordinates(location)
+            data["lat_long"] = lat_long
+
+            return render_template('results/tracecallresults.html', data=data)
+    except Exception as e:
+        return render_template('error/invalid.html')
 
 
 @app.route('/api/scanurl', methods=['POST'])
@@ -150,6 +195,7 @@ def scan_url():
         data = {
             'tld': tld,
             'ip_address': ip_addr,
+            'host': host_name(ip_addr),
             'location': location,
             'asn': ip_info['asn'],
             'asn_registry': ip_info['asn_registry'],
@@ -172,6 +218,8 @@ def scan_url():
             'phishing_score': '--',
         }
 
+        print(data['location'])
+
         return render_template('results/urlscanresults.html', data=data)
     return render_template('error/invalid.html')
 
@@ -180,6 +228,7 @@ def scan_url():
 def check_spam():
     message = request.form.get('message')
     phone = request.form.get('phone')
+    subject = request.form.get('subject')
     email = request.form.get('email')
     if message:
         prediction_nb, prediction_svm, prediction_lr, prediction_dt = predict_spam(message, cv)
@@ -188,7 +237,13 @@ def check_spam():
         print("Logistic Regression Prediction:", prediction_lr)
         print("Decision Tree Prediction:", prediction_dt)
 
-        spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt) * 100) / 4
+        subject = "Special discount offer!"
+
+        sub_analysis = analyse_subject(subject)
+
+        spam_score = ((prediction_nb + prediction_svm + prediction_lr + prediction_dt + sub_analysis) * 100) / 5
+
+        recommendation = read_json("Database/do_and_dont_spam.json")
 
         data = {
             "input_msg": message,
@@ -197,8 +252,16 @@ def check_spam():
             "sender": "",
             "status": "",
             "current_timestamp": get_timestamp(),
-            "do": {},
-            "do_not": {},
+            "do": {
+                "do_1": get_random_recommend(recommendation, 'do'),
+                "do_2": get_random_recommend(recommendation, 'do'),
+                "do_3": get_random_recommend(recommendation, 'do'),
+            },
+            "do_not": {
+                "dont_1": get_random_recommend(recommendation, 'dont'),
+                "dont_2": get_random_recommend(recommendation, 'dont'),
+                "dont_3": get_random_recommend(recommendation, 'dont')
+            },
 
         }
 
@@ -223,5 +286,47 @@ def check_spam():
     return render_template('error/invalid.html')
 
 
+@app.route('/extn/detect', methods=['POST'])
+def detect_spam_and_phishing():
+    data = request.json
+    url = data.get('url')
+    print(url)
+
+    response = requests.get(url)
+
+    features = {
+        "protocol": check_url_protocol(url),
+        "at_sign": check_at_sign(url),
+        "ip_in_domain": have_ip_addr(url),
+        "url_length": check_url_length(url),
+        "redirection": have_redirection(url),
+        "https_in_domain": check_https_domain(url),
+        "dash": have_dash(url),
+        "upper_case": is_domain_upper(url),
+        "homograph": check_homograph(url),
+        "short": check_tiny_url(url),
+        "iframe": have_iframe(response),
+        "forward": forwarding(response),
+        "r_click": right_click(response),
+        "m_over": mouse_over(response),
+        "head_script": check_head_script(response),
+        "num_domain": have_num(url),
+        "favicon": check_favicon(response, url),
+    }
+
+    risk_score = calc_phishing_score(features)
+
+    if risk_score >= 50:
+        status = "Phishing"
+    elif 50 > risk_score >= 15:
+        status = "Suspicious"
+    else:
+        status = "Legitimate"
+
+    print(status)
+
+    return jsonify({'status': status, 'risk_score': risk_score}), 200
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
