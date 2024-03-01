@@ -38,7 +38,8 @@ const generateCSS = () => {
 
 
 function checkURL(url) {
-    alert (url)
+    
+       // const encodedUrl = encodeURIComponent(url);
     return new Promise((resolve, reject) => {
         fetch('http://localhost:5000/extn/detect', {
             method: 'POST',
@@ -57,14 +58,12 @@ function checkURL(url) {
     })
     .then(({ status, risk_score }) => {
 
+        alert("This URL is "+ status +" with risk score of "+ risk_score + " have a Safe Browsing!");
+
         if (status === "Phishing") {
             document.head.innerHTML = generateCSS();
             document.body.innerHTML = generateHTML(risk_score);
-        }else if (status === "Suspicious") {
-            document.head.innerHTML = generateCSS();
-            document.body.innerHTML = generateHTML(risk_score);
         }
-
     });
 }
 
