@@ -6,7 +6,7 @@ import pandas as pd
 from flask import Flask, render_template, request, jsonify, redirect
 from flask_cors import CORS
 
-from PhishingDetector.feat import FeatureExtraction
+#from PhishingDetector.feat import FeatureExtraction
 from PhishingDetector.features import feature_extraction
 from PhishingDetector.url_features import *
 from PhishingDetector.website_features import *
