@@ -352,21 +352,13 @@ def featureExtraction(url):
   #Address bar based features (10)
   #features.append(getDomain(url))
   features.append(havingIP(url))
-  print(features)
   features.append(haveAtSign(url))
-  print(features)
   features.append(getLength(url))
-  print(features)
   features.append(getDepth(url))
-  print(features)
   features.append(redirection(url))
-  print(features)
   features.append(httpDomain(url))
-  print(features)
   features.append(tinyURL(url))
-  print(features)
   features.append(prefixSuffix(url))
-  print(features)
   
   #Domain based features (4)
   dns = 0
@@ -376,12 +368,9 @@ def featureExtraction(url):
     dns = 1
 
   features.append(dns)
-  print(features)
  # features.append(web_traffic(url))
   features.append(1 if dns == 1 else domainAge(domain_name))
-  print(features)
   features.append(1 if dns == 1 else domainEnd(domain_name))
-  print(features)
   
   # HTML & Javascript based features
   try:
@@ -390,13 +379,9 @@ def featureExtraction(url):
     response = ""
 
   features.append(iframe(response))
-  print(features)
   features.append(mouseOver(response))
-  print(features)
   features.append(rightClick(response))
-  print(features)
   features.append(forwarding(response))
-  print(features)
   
   return features
 
@@ -405,6 +390,7 @@ def featureExtraction(url):
 #                       'https_Domain', 'TinyURL', 'Prefix/Suffix', 'DNS_Record', 
 #                       'Domain_Age', 'Domain_End', 'iFrame', 'Mouse_Over','Right_Click', 'Web_Forwards', 'Label']
 feature_names = ['Have_IP', 'Have_At', 'URL_Length', 'URL_Depth','Redirection', 
-                      'https_Domain', 'TinyURL', 'Prefix/Suffix', 'DNS_Record', 
+                      'https_Domain', 'TinyURL', 'Prefix/Suffix', 'DNS_Record',  
                       'Domain_Age', 'Domain_End', 'iFrame', 'Mouse_Over','Right_Click', 'Web_Forwards', 'Label']
+
 print (featureExtraction("https://chat.openai.com/c/d829b7b1-f5bf-407a-b763-ef3ddee6231e"))
