@@ -110,7 +110,7 @@ def check_phishing():
 
         if risk_score >= 50:
             data["status"] = "Phishing"
-        elif 50 > risk_score >= 15:
+        elif 50 > risk_score >= 20:
             data["status"] = "Suspicious"
         else:
             data["status"] = "Legitimate"
