@@ -76,6 +76,7 @@ def check_phishing():
                 "dont_2": get_random_recommend(recommendation, 'dont'),
                 "dont_3": get_random_recommend(recommendation, 'dont')
             },
+            "condition": False
         }
 
         features = {
@@ -113,6 +114,7 @@ def check_phishing():
             data["status"] = "Suspicious"
         else:
             data["status"] = "Legitimate"
+            data["condition"] = True
 
         if features["homograph"]:
             data["is_homograph"] = "Yes"
@@ -127,22 +129,6 @@ def check_phishing():
         url_features = feature_extraction(url)
         print(url_features)
 
-        # obj = FeatureExtraction(url)
-        # x = np.array(obj.getFeaturesList()).reshape(1, 30)
-        #
-        # file = open("PhishingDetector/ml_model/model.joblib", "rb")
-        # # gbc = pickle.load(file)
-        #
-        # gbc = joblib.load(file)
-        #
-        # y_pred = gbc.predict(x)[0]
-        #
-        # y_pro_phishing = gbc.predict_proba(x)[0, 0]
-        # y_pro_non_phishing = gbc.predict_proba(x)[0, 1]
-        # # if(y_pred ==1 ):
-        # pred = "It is {0:.2f} safe to go ".format(y_pro_phishing * 100)
-        # xx = round(y_pro_non_phishing, 2)
-        # print(xx)
 
         return render_template('results/phishingresults.html', data=data)
     return render_template('error/invalid.html')
@@ -264,6 +250,7 @@ def check_spam():
                 "dont_2": get_random_recommend(recommendation, 'dont'),
                 "dont_3": get_random_recommend(recommendation, 'dont')
             },
+            "condition": False
 
         }
 
@@ -276,6 +263,7 @@ def check_spam():
 
         if spam_score < 25:
             data["status"] = "Not Spam"
+            data["condition"] = True
         elif 25 <= spam_score <= 50:
             data["status"] = "Less likely to be Spam"
         elif 50 <= spam_score <= 75:
