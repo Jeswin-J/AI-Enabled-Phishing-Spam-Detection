@@ -74,8 +74,44 @@
                 </div>
             </div>
         </div>
+         
+        {% if data["condition"] %}
 
         <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row d-flex align-items-center justify-content-center" style="margin-top: 20px;">
+                        <div class="col-xl-6 col-lg-6">
+                            <img class="card-img-top" src="/static/assets/img/shield.jpg" alt="Warning Image">
+                        </div>
+                        <h5 class="card-title" style="margin-bottom: 10px; font-size: 70px; text-align: center; color: green; gap: 10px; font: bold;"><b>looks good..</b></h5>
+                        <h3>This Website seems to be <span style="color: green; gap: 10px; font-weight: bold;">legitmate</span>. </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% else %}
+        
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row d-flex align-items-center justify-content-center" style="margin-top: 20px;">
+                        <div class="col-xl-6 col-lg-6">
+                            <img class="card-img-top" src="/static/assets/img/warning.png" alt="Warning Image">
+                        </div>
+                        <h5 class="card-title" style="margin-bottom: 10px; font-size: 70px; text-align: center; color: red; gap: 10px; font: bold;"><b>Attention!</b></h5>
+                        <h3>This Website seems to be <span style="color: red; gap: 10px; font-weight: bold;">suspicious</span>. Please cross-verify before you continue!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% endif %}
+
+        
+
+        <div class="col-xl-12 col-lg-12 mt-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" style="margin-bottom: 10px;"><b>Recommendations</b></h5>

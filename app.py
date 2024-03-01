@@ -17,6 +17,8 @@ from TraceCall.trace_call import *
 from UrlScanner.url_scanner import *
 from Utils.utils import *
 
+from PhishingDetector.URLFeatureExtraction import *
+
 app = Flask(__name__)
 CORS(app)
 
@@ -74,6 +76,7 @@ def check_phishing():
                 "dont_2": get_random_recommend(recommendation, 'dont'),
                 "dont_3": get_random_recommend(recommendation, 'dont')
             },
+            "condition": False
         }
 
         features = {
@@ -111,6 +114,7 @@ def check_phishing():
             data["status"] = "Suspicious"
         else:
             data["status"] = "Legitimate"
+            data["condition"] = True
 
         if features["homograph"]:
             data["is_homograph"] = "Yes"
@@ -125,22 +129,6 @@ def check_phishing():
         url_features = feature_extraction(url)
         print(url_features)
 
-        # obj = FeatureExtraction(url)
-        # x = np.array(obj.getFeaturesList()).reshape(1, 30)
-        #
-        # file = open("PhishingDetector/ml_model/model.joblib", "rb")
-        # # gbc = pickle.load(file)
-        #
-        # gbc = joblib.load(file)
-        #
-        # y_pred = gbc.predict(x)[0]
-        #
-        # y_pro_phishing = gbc.predict_proba(x)[0, 0]
-        # y_pro_non_phishing = gbc.predict_proba(x)[0, 1]
-        # # if(y_pred ==1 ):
-        # pred = "It is {0:.2f} safe to go ".format(y_pro_phishing * 100)
-        # xx = round(y_pro_non_phishing, 2)
-        # print(xx)
 
         return render_template('results/phishingresults.html', data=data)
     return render_template('error/invalid.html')
@@ -262,6 +250,7 @@ def check_spam():
                 "dont_2": get_random_recommend(recommendation, 'dont'),
                 "dont_3": get_random_recommend(recommendation, 'dont')
             },
+            "condition": False
 
         }
 
@@ -274,6 +263,7 @@ def check_spam():
 
         if spam_score < 25:
             data["status"] = "Not Spam"
+            data["condition"] = True
         elif 25 <= spam_score <= 50:
             data["status"] = "Less likely to be Spam"
         elif 50 <= spam_score <= 75:
@@ -286,12 +276,63 @@ def check_spam():
     return render_template('error/invalid.html')
 
 
+# @app.route('/extn/detect', methods=['POST'])
+# def detect_spam_and_phishing():
+#     data = request.json
+#     url = data.get('url')
+#     print(url)
+
+#     response = requests.get(url)
+
+#     features = {
+#         "protocol": check_url_protocol(url),
+#         "at_sign": check_at_sign(url),
+#         "ip_in_domain": have_ip_addr(url),
+#         "url_length": check_url_length(url),
+#         "redirection": have_redirection(url),
+#         "https_in_domain": check_https_domain(url),
+#         "dash": have_dash(url),
+#         "upper_case": is_domain_upper(url),
+#         "homograph": check_homograph(url),
+#         "short": check_tiny_url(url),
+#         "iframe": have_iframe(response),
+#         "forward": forwarding(response),
+#         "r_click": right_click(response),
+#         "m_over": mouse_over(response),
+#         "head_script": check_head_script(response),
+#         "num_domain": have_num(url),
+#         "favicon": check_favicon(response, url),
+#     }
+
+#     risk_score = calc_phishing_score(features)
+
+#     if risk_score >= 50:
+#         status = "Phishing"
+#     elif 50 > risk_score >= 20:
+#         status = "Suspicious"
+#     else:0
+#         status = "Legitimate"
+
+#     print(status)
+
+#     return jsonify({'status': status, 'risk_score': risk_score}), 200
+
+
+
 @app.route('/extn/detect', methods=['POST'])
 def detect_spam_and_phishing():
     data = request.json
     url = data.get('url')
     print(url)
 
+    model = pickle.load(open("PhishingDetector/ml_model/XGBoostClassifier.pickle.dat", "rb"))
+
+    url_features = featureExtraction(url)
+
+    data_frame = [url_features]
+    prediction = model.predict(data_frame)
+
+    
     response = requests.get(url)
 
     features = {
@@ -316,18 +357,15 @@ def detect_spam_and_phishing():
 
     risk_score = calc_phishing_score(features)
 
-    if risk_score >= 50:
+    risk_score = round(risk_score, 2)
+    
+    if prediction[0] == 0 and risk_score > 20:
         status = "Phishing"
-    elif 50 > risk_score >= 15:
-        status = "Suspicious"
     else:
         status = "Legitimate"
 
-    print(status)
-
     return jsonify({'status': status, 'risk_score': risk_score}), 200
-
-
+    #return jsonify({}), 200
     
 
 
