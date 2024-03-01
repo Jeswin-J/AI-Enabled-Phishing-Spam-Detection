@@ -1,6 +1,13 @@
-from flask import Flask, render_template, request, jsonify
+import pickle
+
+import joblib
+import numpy as np
+import pandas as pd
+from flask import Flask, render_template, request, jsonify, redirect
 from flask_cors import CORS
 
+from PhishingDetector.feat import FeatureExtraction
+from PhishingDetector.features import feature_extraction
 from PhishingDetector.url_features import *
 from PhishingDetector.website_features import *
 from SpamDetector.msg_classification_model import cv
@@ -115,20 +122,25 @@ def check_phishing():
         else:
             data["shortened"] = "No"
 
-        # url_features = feature_extraction(url)
-        # print(url_features)
+        url_features = feature_extraction(url)
+        print(url_features)
+
+        # obj = FeatureExtraction(url)
+        # x = np.array(obj.getFeaturesList()).reshape(1, 30)
         #
-        # filename = 'PhishingDetector/ml_model/xgboost_model.joblib'
-        # xgb = joblib.load(filename)
+        # file = open("PhishingDetector/ml_model/model.joblib", "rb")
+        # # gbc = pickle.load(file)
         #
-        # input_data = pd.DataFrame(np.array(url_features).reshape(1, -1))
+        # gbc = joblib.load(file)
         #
-        # prediction = xgb.predict(input_data)
+        # y_pred = gbc.predict(x)[0]
         #
-        # # Reorder the columns of input_data to match the expected feature order
-        # # Make predictions
-        # # Print prediction
-        # print("Prediction:", prediction)
+        # y_pro_phishing = gbc.predict_proba(x)[0, 0]
+        # y_pro_non_phishing = gbc.predict_proba(x)[0, 1]
+        # # if(y_pred ==1 ):
+        # pred = "It is {0:.2f} safe to go ".format(y_pro_phishing * 100)
+        # xx = round(y_pro_non_phishing, 2)
+        # print(xx)
 
         return render_template('results/phishingresults.html', data=data)
     return render_template('error/invalid.html')
@@ -137,13 +149,19 @@ def check_phishing():
 @app.route('/api/trace', methods=['POST'])
 def trace():
     phone = request.form.get('phone')
-    data = process_number(phone)
-    print(data)
-    print(type(data))
-    location = data["region"]
-    lat_long = get_approx_coordinates(location)
-    data["lat_long"] = lat_long
-    return render_template('results/tracecallresults.html', data=data)
+
+    try:
+        parsed_phone = phonenumbers.parse(phone, None)
+        is_valid = phonenumbers.is_valid_number(parsed_phone)
+        if is_valid:
+            data = process_number(phone)
+            location = data["region"]
+            lat_long = get_approx_coordinates(location)
+            data["lat_long"] = lat_long
+
+            return render_template('results/tracecallresults.html', data=data)
+    except Exception as e:
+        return render_template('error/invalid.html')
 
 
 @app.route('/api/scanurl', methods=['POST'])
@@ -272,6 +290,7 @@ def check_spam():
 def detect_spam_and_phishing():
     data = request.json
     url = data.get('url')
+    print(url)
 
     response = requests.get(url)
 
@@ -306,8 +325,7 @@ def detect_spam_and_phishing():
 
     print(status)
 
-    # Return JSON response with the result
-    return jsonify({'status': status}), 200
+    return jsonify({'status': status, 'risk_score': risk_score}), 200
 
 
 if __name__ == '__main__':
